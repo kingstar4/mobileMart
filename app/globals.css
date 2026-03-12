@@ -79,6 +79,8 @@
 @theme inline {
   --font-sans: 'Geist', 'Geist Fallback';
   --font-mono: 'Geist Mono', 'Geist Mono Fallback';
+  --font-heading: var(--font-heading), 'Syne', sans-serif;
+  --font-mono-display: var(--font-mono-display), 'DM Mono', monospace;
   --color-background: var(--background);
   --color-foreground: var(--foreground);
   --color-card: var(--card);
@@ -133,6 +135,7 @@
 
   /* Typography hierarchy */
   h1, h2, h3, h4, h5, h6 {
+    font-family: var(--font-heading), 'Syne', sans-serif;
     @apply font-semibold tracking-tight;
   }
 
@@ -232,4 +235,36 @@
 
 .animate-softPulse {
   animation: softPulse 2s ease-in-out infinite;
+}
+
+/* Hero section animations */
+@keyframes heroFloatUp {
+  0% { transform: translateY(0px); opacity: 0.6; }
+  100% { transform: translateY(-100vh); opacity: 0; }
+}
+
+@keyframes heroPulse {
+  0%, 100% { opacity: 0.4; transform: scale(1); }
+  50% { opacity: 1; transform: scale(1.05); }
+}
+
+@keyframes heroSpin {
+  from { transform: translate(-50%, -50%) rotate(0deg); }
+  to { transform: translate(-50%, -50%) rotate(360deg); }
+}
+
+@keyframes heroGridShimmer {
+  0% { opacity: 0.03; }
+  50% { opacity: 0.07; }
+  100% { opacity: 0.03; }
+}
+
+@keyframes heroFloat {
+  0%, 100% { transform: translateY(0px); }
+  50% { transform: translateY(-15px); }
+}
+
+@keyframes heroFadeSlideIn {
+  from { opacity: 0; transform: translateY(30px); }
+  to { opacity: 1; transform: translateY(0); }
 }

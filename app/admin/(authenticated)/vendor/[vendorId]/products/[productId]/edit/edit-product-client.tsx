@@ -57,9 +57,40 @@ export default function EditProductClient({
     // Newly selected files
     const [newFiles, setNewFiles] = React.useState<File[]>([]);
     const [newPreviews, setNewPreviews] = React.useState<string[]>([]);
+    const [isDragging, setIsDragging] = React.useState(false);
+    const fileInputRef = React.useRef<HTMLInputElement>(null);
 
     const [loading, setLoading] = React.useState(false);
     const [error, setError] = React.useState<string | null>(null);
+
+    const maxImages = 6;
+    const totalImages = kept.length + newFiles.length;
+    const canAddMore = totalImages < maxImages;
+
+    function addFiles(incoming: File[]) {
+        const sanitized = incoming.filter((f) => f.type.startsWith("image/"));
+        setNewFiles((prev) => {
+            const combined = [...prev, ...sanitized];
+            const allowed = maxImages - kept.length;
+            return combined.slice(0, Math.max(0, allowed));
+        });
+    }
+
+    function handleDrop(e: React.DragEvent) {
+        e.preventDefault();
+        setIsDragging(false);
+        if (e.dataTransfer.files) addFiles(Array.from(e.dataTransfer.files));
+    }
+
+    function handleDragOver(e: React.DragEvent) {
+        e.preventDefault();
+        setIsDragging(true);
+    }
+
+    function handleDragLeave(e: React.DragEvent) {
+        e.preventDefault();
+        setIsDragging(false);
+    }
 
     // Generate previews for new files
     React.useEffect(() => {
@@ -259,76 +290,123 @@ export default function EditProductClient({
                     Visible on storefront (is_active)
                 </label>
 
-                {/* Existing images */}
-                <div className="space-y-2">
-                    <label className="text-sm font-medium">Current Images</label>
-                    {kept.length > 0 ? (
-                        <div className="grid grid-cols-3 gap-3 sm:grid-cols-4">
-                            {kept.map((img) => (
-                                <div
-                                    key={img.id}
-                                    className="relative overflow-hidden rounded-xl border bg-black/5"
-                                >
-                                    <img
-                                        src={img.url}
-                                        alt="Product"
-                                        className="aspect-square w-full object-cover"
-                                    />
-                                    <button
-                                        type="button"
-                                        className="absolute right-2 top-2 rounded-lg bg-white/90 px-2 py-1 text-xs"
-                                        onClick={() =>
-                                            setKept((prev) => prev.filter((x) => x.id !== img.id))
-                                        }
-                                    >
-                                        Remove
-                                    </button>
-                                </div>
-                            ))}
-                        </div>
-                    ) : (
-                        <p className="text-xs text-black/60">No existing images.</p>
-                    )}
-                </div>
+                <div className="space-y-3">
+                    <label className="text-sm font-medium">Images</label>
 
-                {/* New images */}
-                <div className="space-y-2">
-                    <label className="text-sm font-medium">Add New Images</label>
+                    {/* Hidden native file input */}
                     <input
+                        ref={fileInputRef}
                         type="file"
                         accept="image/*"
                         multiple
+                        className="sr-only"
                         onChange={(e) => {
                             const picked = sanitizeFiles(e.target.files);
-                            setNewFiles(picked);
+                            addFiles(picked);
+                            e.target.value = "";
                         }}
                     />
 
-                    {newPreviews.length > 0 ? (
+                    {/* Drop zone */}
+                    {canAddMore && (
+                        <button
+                            type="button"
+                            onClick={() => fileInputRef.current?.click()}
+                            onDrop={handleDrop}
+                            onDragOver={handleDragOver}
+                            onDragLeave={handleDragLeave}
+                            className={`
+                                group flex w-full flex-col items-center justify-center gap-3
+                                rounded-xl border-2 border-dashed px-6 py-10
+                                transition-all duration-200 cursor-pointer
+                                ${isDragging
+                                    ? "border-blue-500 bg-blue-50"
+                                    : "border-black/15 bg-black/[0.02] hover:border-black/30 hover:bg-black/[0.04]"
+                                }
+                            `}
+                        >
+                            <div className={`
+                                flex h-12 w-12 items-center justify-center rounded-full
+                                transition-colors duration-200
+                                ${isDragging ? "bg-blue-100 text-blue-600" : "bg-black/5 text-black/40 group-hover:bg-black/10 group-hover:text-black/60"}
+                            `}>
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                                    <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
+                                    <polyline points="17 8 12 3 7 8" />
+                                    <line x1="12" y1="3" x2="12" y2="15" />
+                                </svg>
+                            </div>
+                            <div className="text-center">
+                                <p className={`text-sm font-medium ${isDragging ? "text-blue-600" : "text-black/70"}`}>
+                                    {isDragging ? "Drop images here" : "Click to upload or drag & drop"}
+                                </p>
+                                <p className="mt-1 text-xs text-black/40">
+                                    PNG, JPG, WEBP — {maxImages - totalImages} more allowed
+                                </p>
+                            </div>
+                        </button>
+                    )}
+
+                    {/* All image previews (existing + new) */}
+                    {(kept.length > 0 || newPreviews.length > 0) && (
                         <div className="grid grid-cols-3 gap-3 sm:grid-cols-4">
-                            {newPreviews.map((src, idx) => (
-                                <div
-                                    key={src}
-                                    className="relative overflow-hidden rounded-xl border bg-black/5"
-                                >
-                                    <img
-                                        src={src}
-                                        alt={`Preview ${idx + 1}`}
-                                        className="aspect-square w-full object-cover"
-                                    />
+                            {/* Existing / kept images */}
+                            {kept.map((img, idx) => (
+                                <div key={img.id} className="group/img relative overflow-hidden rounded-xl border bg-black/5">
+                                    <img src={img.url} alt="Product" className="aspect-square w-full object-cover" />
+                                    <div className="absolute inset-0 bg-black/0 transition-colors group-hover/img:bg-black/20" />
                                     <button
                                         type="button"
-                                        className="absolute right-2 top-2 rounded-lg bg-white/90 px-2 py-1 text-xs"
-                                        onClick={() => {
-                                            setNewFiles((prev) => prev.filter((_, i) => i !== idx));
-                                        }}
+                                        className="absolute right-1.5 top-1.5 flex h-7 w-7 items-center justify-center rounded-full bg-white/90 text-black/60 opacity-0 shadow-sm transition-all hover:bg-red-500 hover:text-white group-hover/img:opacity-100"
+                                        onClick={() => setKept((prev) => prev.filter((x) => x.id !== img.id))}
+                                        title="Remove image"
                                     >
-                                        Remove
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                                            <line x1="18" y1="6" x2="6" y2="18" /><line x1="6" y1="6" x2="18" y2="18" />
+                                        </svg>
                                     </button>
+                                    <span className="absolute bottom-1.5 left-1.5 flex h-6 w-6 items-center justify-center rounded-full bg-black/60 text-[10px] font-bold text-white">
+                                        {idx + 1}
+                                    </span>
                                 </div>
                             ))}
+
+                            {/* New image previews */}
+                            {newPreviews.map((src, idx) => (
+                                <div key={src} className="group/img relative overflow-hidden rounded-xl border bg-black/5">
+                                    <img src={src} alt={`Preview ${idx + 1}`} className="aspect-square w-full object-cover" />
+                                    <div className="absolute inset-0 bg-black/0 transition-colors group-hover/img:bg-black/20" />
+                                    <button
+                                        type="button"
+                                        className="absolute right-1.5 top-1.5 flex h-7 w-7 items-center justify-center rounded-full bg-white/90 text-black/60 opacity-0 shadow-sm transition-all hover:bg-red-500 hover:text-white group-hover/img:opacity-100"
+                                        onClick={() => setNewFiles((prev) => prev.filter((_, i) => i !== idx))}
+                                        title="Remove image"
+                                    >
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                                            <line x1="18" y1="6" x2="6" y2="18" /><line x1="6" y1="6" x2="18" y2="18" />
+                                        </svg>
+                                    </button>
+                                    <span className="absolute bottom-1.5 left-1.5 flex h-6 w-6 items-center justify-center rounded-full bg-black/60 text-[10px] font-bold text-white">
+                                        {kept.length + idx + 1}
+                                    </span>
+                                </div>
+                            ))}
+
+                            {/* Add more tile */}
+                            {canAddMore && (kept.length > 0 || newFiles.length > 0) && (
+                                <button
+                                    type="button"
+                                    onClick={() => fileInputRef.current?.click()}
+                                    className="flex aspect-square w-full flex-col items-center justify-center gap-1 rounded-xl border-2 border-dashed border-black/10 text-black/30 transition-colors hover:border-black/25 hover:text-black/50"
+                                >
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                                        <line x1="12" y1="5" x2="12" y2="19" /><line x1="5" y1="12" x2="19" y2="12" />
+                                    </svg>
+                                    <span className="text-[10px] font-medium">Add</span>
+                                </button>
+                            )}
                         </div>
-                    ) : null}
+                    )}
                 </div>
 
                 {error ? (

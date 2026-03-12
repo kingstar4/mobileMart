@@ -3,6 +3,7 @@
 import * as React from "react";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { supabaseBrowser } from "@/lib/supabase/browserClient";
+import { ThemeToggle } from "@/components/theme-toggle";
 
 type Vendor = {
     id: string;
@@ -164,12 +165,13 @@ export default function ProductsClient({
             <header className="mb-6 flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between">
                 <div>
                     <h1 className="text-2xl font-semibold">{vendor.name}</h1>
-                    <p className="text-sm text-black/60">
+                    <p className="text-sm text-muted-foreground">
                         WhatsApp: {vendor.whatsapp_number} • Role: {role}
                     </p>
                 </div>
 
-                <div className="flex gap-2">
+                <div className="flex items-center gap-2">
+                    <ThemeToggle />
                     <a
                         href={`/v/${vendor.id}`}
                         className="rounded-xl border px-4 py-2 text-sm"
@@ -178,7 +180,7 @@ export default function ProductsClient({
                     </a>
                     <a
                         href={`/admin/vendor/${vendor.id}/products/new`}
-                        className="rounded-xl bg-black px-4 py-2 text-sm font-semibold text-white"
+                        className="rounded-xl bg-foreground px-4 py-2 text-sm font-semibold text-background"
                     >
                         + Add Product
                     </a>
@@ -188,7 +190,7 @@ export default function ProductsClient({
             {/* Toolbar */}
             <section className="mb-4 grid gap-3 sm:grid-cols-3">
                 <input
-                    className="w-full rounded-xl border px-3 py-2"
+                    className="w-full rounded-xl border border-border bg-card text-foreground px-3 py-2"
                     placeholder="Search products by title..."
                     value={q}
                     onChange={(e) => setQ(e.target.value)}
@@ -198,7 +200,7 @@ export default function ProductsClient({
                 />
 
                 <select
-                    className="w-full rounded-xl border px-3 py-2"
+                    className="w-full rounded-xl border border-border bg-card text-foreground px-3 py-2"
                     value={status}
                     onChange={(e) => {
                         const v = e.target.value;
@@ -212,7 +214,7 @@ export default function ProductsClient({
                 </select>
 
                 <select
-                    className="w-full rounded-xl border px-3 py-2"
+                    className="w-full rounded-xl border border-border bg-card text-foreground px-3 py-2"
                     value={sort}
                     onChange={(e) => {
                         const v = e.target.value;
@@ -248,15 +250,15 @@ export default function ProductsClient({
             </div>
 
             {error ? (
-                <div className="mb-4 rounded-xl border border-red-200 bg-red-50 p-3 text-sm text-red-700">
+                <div className="mb-4 rounded-xl border border-red-200 bg-red-50 dark:bg-red-950/30 dark:border-red-800 p-3 text-sm text-red-700 dark:text-red-400">
                     {error}
                 </div>
             ) : null}
 
             {/* Desktop table */}
-            <div className="hidden overflow-hidden rounded-2xl border bg-white sm:block">
+            <div className="hidden overflow-hidden rounded-2xl border border-border bg-card sm:block">
                 <table className="w-full text-sm">
-                    <thead className="bg-black/5">
+                    <thead className="bg-muted">
                         <tr>
                             <th className="p-3 text-left font-semibold">Product</th>
                             <th className="p-3 text-left font-semibold">Price</th>
@@ -270,14 +272,14 @@ export default function ProductsClient({
                             <tr key={p.id} className="border-t">
                                 <td className="p-3">
                                     <div className="flex items-center gap-3">
-                                        <div className="h-12 w-12 overflow-hidden rounded-xl bg-black/5">
+                                        <div className="h-12 w-12 overflow-hidden rounded-xl bg-muted">
                                             {p.thumb ? (
                                                 <img src={p.thumb} alt={p.title} className="h-full w-full object-cover" />
                                             ) : null}
                                         </div>
                                         <div>
                                             <div className="font-medium">{p.title}</div>
-                                            <div className="text-xs text-black/50" suppressHydrationWarning>
+                                            <div className="text-xs text-muted-foreground" suppressHydrationWarning>
                                                 Updated: {new Date(p.updated_at).toLocaleString()}
                                             </div>
                                         </div>
@@ -302,7 +304,7 @@ export default function ProductsClient({
                                             disabled={busyId === p.id}
                                             onChange={(e) => toggleActive(p.id, e.target.checked)}
                                         />
-                                        <span className={`text-xs font-semibold ${p.is_active ? "text-green-700" : "text-black/60"}`}>
+                                        <span className={`text-xs font-semibold ${p.is_active ? "text-green-700 dark:text-green-400" : "text-muted-foreground"}`}>
                                             {p.is_active ? "Active" : "Hidden"}
                                         </span>
                                     </label>
@@ -331,7 +333,7 @@ export default function ProductsClient({
 
                         {products.length === 0 ? (
                             <tr>
-                                <td className="p-6 text-center text-black/60" colSpan={5}>
+                                <td className="p-6 text-center text-muted-foreground" colSpan={5}>
                                     No products found.
                                 </td>
                             </tr>
@@ -343,9 +345,9 @@ export default function ProductsClient({
             {/* Mobile cards */}
             <div className="space-y-3 sm:hidden">
                 {products.map((p) => (
-                    <div key={p.id} className="rounded-2xl border bg-white p-4">
+                    <div key={p.id} className="rounded-2xl border border-border bg-card p-4">
                         <div className="flex gap-3">
-                            <div className="h-16 w-16 overflow-hidden rounded-xl bg-black/5">
+                            <div className="h-16 w-16 overflow-hidden rounded-xl bg-muted">
                                 {p.thumb ? (
                                     <img src={p.thumb} alt={p.title} className="h-full w-full object-cover" />
                                 ) : null}
@@ -353,7 +355,7 @@ export default function ProductsClient({
                             <div className="min-w-0 flex-1">
                                 <div className="font-semibold line-clamp-1">{p.title}</div>
                                 <div className="text-sm">{formatMoney(p.currency, p.price)}</div>
-                                <div className="text-xs text-black/50" suppressHydrationWarning>
+                                <div className="text-xs text-muted-foreground" suppressHydrationWarning>
                                     Updated: {new Date(p.updated_at).toLocaleString()}
                                 </div>
                             </div>
@@ -361,7 +363,7 @@ export default function ProductsClient({
 
                         <div className="mt-3 grid gap-3">
                             <div className="flex items-center justify-between">
-                                <span className="text-sm text-black/60">Quantity</span>
+                                <span className="text-sm text-muted-foreground">Quantity</span>
                                 <QuantityControl
                                     value={p.quantity}
                                     disabled={busyId === p.id}
@@ -370,7 +372,7 @@ export default function ProductsClient({
                             </div>
 
                             <div className="flex items-center justify-between">
-                                <span className="text-sm text-black/60">Visible</span>
+                                <span className="text-sm text-muted-foreground">Visible</span>
                                 <input
                                     type="checkbox"
                                     checked={p.is_active}
@@ -399,7 +401,7 @@ export default function ProductsClient({
                 ))}
 
                 {products.length === 0 ? (
-                    <div className="rounded-2xl border bg-white p-6 text-center text-black/60">
+                    <div className="rounded-2xl border border-border bg-card p-6 text-center text-muted-foreground">
                         No products found.
                     </div>
                 ) : null}
@@ -440,7 +442,7 @@ function QuantityControl({
             <button
                 type="button"
                 disabled={disabled}
-                className="h-9 w-9 rounded-xl border disabled:opacity-50"
+                className="h-9 w-9 rounded-xl border border-border bg-card text-foreground disabled:opacity-50"
                 onClick={() => onChange(Math.max(0, value - 1))}
             >
                 −
@@ -449,7 +451,7 @@ function QuantityControl({
             <input
                 inputMode="numeric"
                 disabled={disabled}
-                className="h-9 w-20 rounded-xl border px-2 text-center disabled:opacity-50"
+                className="h-9 w-20 rounded-xl border border-border bg-card text-foreground px-2 text-center disabled:opacity-50"
                 value={draft}
                 onChange={(e) => setDraft(e.target.value.replace(/[^\d]/g, ""))}
                 onBlur={() => {
@@ -467,7 +469,7 @@ function QuantityControl({
             <button
                 type="button"
                 disabled={disabled}
-                className="h-9 w-9 rounded-xl border disabled:opacity-50"
+                className="h-9 w-9 rounded-xl border border-border bg-card text-foreground disabled:opacity-50"
                 onClick={() => onChange(value + 1)}
             >
                 +
@@ -493,9 +495,9 @@ function ConfirmDialog({
 }) {
     return (
         <div className="fixed inset-0 z-50 grid place-items-center bg-black/40 p-4">
-            <div className="w-full max-w-sm rounded-2xl bg-white p-5 shadow">
+            <div className="w-full max-w-sm rounded-2xl bg-card p-5 shadow-lg border border-border">
                 <div className="text-lg font-semibold">{title}</div>
-                <p className="mt-1 text-sm text-black/60">{description}</p>
+                <p className="mt-1 text-sm text-muted-foreground">{description}</p>
 
                 <div className="mt-4 flex gap-2">
                     <button

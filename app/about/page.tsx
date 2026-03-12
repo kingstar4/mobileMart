@@ -1,9 +1,8 @@
 import { Navbar } from '@/components/Navbar';
 import { Footer } from '@/components/Footer';
-import { WhatsAppCTAButton } from '@/components/WhatsAppCTAButton';
 import { Card } from '@/components/ui/card';
 import { WHATSAPP_NUMBER } from '@/lib/products';
-import { Clock, MapPin, MessageCircle } from 'lucide-react';
+import { Mail, MessageCircle } from 'lucide-react';
 import { createSupabaseServer } from '@/lib/supabase/server';
 
 export default async function About() {
@@ -23,30 +22,30 @@ export default async function About() {
             <h1 className="text-4xl md:text-5xl font-bold text-foreground mb-4 text-balance">
               About Vendor Shop
             </h1>
-            <p className="text-muted-foreground text-lg md:text-xl">
-              Your trusted destination for quality products
+            <p className="text-muted-foreground text-lg md:text-xl max-w-2xl mx-auto">
+              Bridging the gap between vendors and customers — so buying and selling is simpler for everyone.
             </p>
           </div>
         </section>
 
         {/* Main Content */}
         <section className="max-w-4xl mx-auto px-4 py-12 md:py-16">
-          {/* Vendor Story */}
+          {/* What We Do */}
           <div className="mb-12">
-            <h2 className="text-3xl font-bold text-foreground mb-6">Our Story</h2>
+            <h2 className="text-3xl font-bold text-foreground mb-6">What We Do</h2>
             <p className="text-muted-foreground text-lg leading-relaxed mb-4">
-              We are a dedicated single vendor business committed to providing our customers with the highest quality
-              products across multiple categories. From premium tech accessories to gourmet food items and fashion
-              essentials, we carefully curate every product to ensure customer satisfaction.
+              Vendor Shop is a platform built to connect vendors with their customers in a smarter, more convenient way.
+              Instead of vendors repeatedly posting products in groups and customers constantly asking
+              &quot;how much?&quot; or &quot;is it still available?&quot;, everything they need is right here — prices,
+              availability, and product details — all in one place.
             </p>
             <p className="text-muted-foreground text-lg leading-relaxed">
-              Our mission is to make online shopping convenient, reliable, and enjoyable. We believe in transparency,
-              fair pricing, and exceptional customer service. Every product in our catalog is personally selected to meet
-              our high standards.
+              When a customer finds what they want, they simply reach out to the vendor directly on WhatsApp to complete
+              the transaction. It&apos;s personal, secure, and hassle-free — the way buying and selling should be.
             </p>
           </div>
 
-          {/* Contact & Info Cards */}
+          {/* Contact Cards */}
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-12">
             {/* WhatsApp Contact */}
             <Card className="p-6">
@@ -55,83 +54,61 @@ export default async function About() {
                 <div className="flex-1">
                   <h3 className="font-semibold text-foreground mb-2">Contact via WhatsApp</h3>
                   <p className="text-muted-foreground text-sm mb-4">
-                    Have questions? Reach out to us directly on WhatsApp for quick responses.
+                    Have questions about the platform? Reach out to us directly on WhatsApp for quick responses.
                   </p>
-                  <WhatsAppCTAButton className="w-full" />
-                </div>
-              </div>
-            </Card>
-
-            {/* WhatsApp Number */}
-            <Card className="p-6">
-              <div className="flex items-start gap-4">
-                <div className="w-8 h-8 bg-primary rounded-lg flex items-center justify-center">
-                  <span className="text-primary-foreground text-sm font-bold">+</span>
-                </div>
-                <div>
-                  <h3 className="font-semibold text-foreground mb-2">WhatsApp Number</h3>
-                  <p className="text-muted-foreground text-sm mb-2">Message us anytime during business hours</p>
                   <a
                     href={`https://wa.me/${WHATSAPP_NUMBER}`}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="font-mono text-primary hover:underline"
+                    className="inline-flex items-center justify-center gap-2 w-full rounded-md bg-primary px-4 py-2.5 text-sm font-medium text-primary-foreground shadow-sm hover:bg-primary/90 transition-colors"
                   >
-                    {WHATSAPP_NUMBER}
+                    <MessageCircle className="w-4 h-4" />
+                    Chat on WhatsApp
                   </a>
                 </div>
               </div>
             </Card>
 
-            {/* Operating Hours */}
+            {/* Email Contact */}
             <Card className="p-6">
               <div className="flex items-start gap-4">
-                <Clock className="w-8 h-8 text-primary mt-1" />
-                <div>
-                  <h3 className="font-semibold text-foreground mb-2">Operating Hours</h3>
-                  <div className="text-sm text-muted-foreground space-y-1">
-                    <p>Monday - Friday: 9:00 AM - 6:00 PM</p>
-                    <p>Saturday: 10:00 AM - 4:00 PM</p>
-                    <p>Sunday: Closed</p>
-                  </div>
-                </div>
-              </div>
-            </Card>
-
-            {/* Location Info */}
-            <Card className="p-6">
-              <div className="flex items-start gap-4">
-                <MapPin className="w-8 h-8 text-primary mt-1" />
-                <div>
-                  <h3 className="font-semibold text-foreground mb-2">Service Coverage</h3>
-                  <p className="text-muted-foreground text-sm">
-                    We serve customers nationwide with reliable WhatsApp ordering and support. Contact us for delivery
-                    details.
+                <Mail className="w-8 h-8 text-primary mt-1" />
+                <div className="flex-1">
+                  <h3 className="font-semibold text-foreground mb-2">Contact via Email</h3>
+                  <p className="text-muted-foreground text-sm mb-4">
+                    Prefer email? Send us a message and we&apos;ll get back to you as soon as possible.
                   </p>
+                  <a
+                    href="mailto:davidinobemhe1@gmail.com"
+                    className="inline-flex items-center justify-center gap-2 w-full rounded-md bg-primary px-4 py-2.5 text-sm font-medium text-primary-foreground shadow-sm hover:bg-primary/90 transition-colors"
+                  >
+                    <Mail className="w-4 h-4" />
+                    Send an Email
+                  </a>
                 </div>
               </div>
             </Card>
           </div>
 
-          {/* Why Choose Us */}
+          {/* Why Vendor Shop */}
           <div>
-            <h2 className="text-3xl font-bold text-foreground mb-6">Why Choose Us?</h2>
+            <h2 className="text-3xl font-bold text-foreground mb-6">Why Vendor Shop?</h2>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               <div className="space-y-2">
-                <h3 className="font-semibold text-foreground">Quality Assurance</h3>
-                <p className="text-muted-foreground">Every product is carefully inspected before delivery</p>
+                <h3 className="font-semibold text-foreground">No More Repetitive Posting</h3>
+                <p className="text-muted-foreground">Vendors list their products once and customers can browse anytime — no need to repost in groups over and over.</p>
               </div>
               <div className="space-y-2">
-                <h3 className="font-semibold text-foreground">Direct Communication</h3>
-                <p className="text-muted-foreground">Chat directly with us on WhatsApp for personalized service</p>
+                <h3 className="font-semibold text-foreground">Prices Upfront</h3>
+                <p className="text-muted-foreground">Every product shows its price clearly, so customers never have to ask &quot;how much?&quot; again.</p>
               </div>
               <div className="space-y-2">
-                <h3 className="font-semibold text-foreground">Fair Pricing</h3>
-                <p className="text-muted-foreground">Competitive prices without hidden charges</p>
+                <h3 className="font-semibold text-foreground">Real-Time Availability</h3>
+                <p className="text-muted-foreground">Stock status is displayed on every product — no more messaging vendors just to ask &quot;is it still available?&quot;</p>
               </div>
               <div className="space-y-2">
-                <h3 className="font-semibold text-foreground">Easy Ordering</h3>
-                <p className="text-muted-foreground">Simple WhatsApp-based ordering process</p>
+                <h3 className="font-semibold text-foreground">Secure Transactions</h3>
+                <p className="text-muted-foreground">All purchases are handled directly between vendor and customer via WhatsApp — private, personal, and secure.</p>
               </div>
             </div>
           </div>

@@ -63,8 +63,8 @@ export function HomeSearchClient({ items }: { items: Item[] }) {
                                     <Image
                                         src={p.thumb}
                                         alt={p.title}
-                                        width={400}
-                                        height={400}
+                                        width={300}
+                                        height={300}
                                         className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-105"
                                     />
                                 ) : (
