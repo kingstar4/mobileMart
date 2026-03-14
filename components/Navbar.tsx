@@ -61,7 +61,7 @@ export function Navbar({ vendors = [] }: NavbarProps) {
           href="/"
           className="font-semibold text-xl text-foreground hover:text-primary transition-colors duration-300 tracking-tight"
         >
-          Vendor Shop
+          CartBridge
         </Link>
 
         {/* Desktop nav */}

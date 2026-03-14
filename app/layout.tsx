@@ -12,7 +12,7 @@ const syne = Syne({ subsets: ["latin"], variable: "--font-heading", weight: ["40
 const dmMono = DM_Mono({ subsets: ["latin"], variable: "--font-mono-display", weight: ["300", "400", "500"] });
 
 export const metadata: Metadata = {
-  title: 'Vendor Shop - Quality Products Online',
+  title: 'CartBridge - Quality Products Online',
   description: 'Discover our curated collection of quality products across multiple categories. Shop easily and connect with us on WhatsApp.',
   generator: 'v0.app',
   icons: {

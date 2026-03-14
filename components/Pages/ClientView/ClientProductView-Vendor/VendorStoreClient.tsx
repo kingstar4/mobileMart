@@ -187,7 +187,7 @@ export default function VendorStoreClient({ vendor, products }: Props) {
             <footer className="mt-auto bg-muted py-8">
                 <div className="max-w-7xl mx-auto px-4 text-center space-y-2">
                     <p className="text-sm text-muted-foreground">
-                        © {new Date().getFullYear()} {vendor.name}. Powered by MobileMart.
+                        © {new Date().getFullYear()} {vendor.name}. Powered by CartBridge.
                     </p>
                     <a
                         href={`https://wa.me/${vendor.whatsapp_number}`}

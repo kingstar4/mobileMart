@@ -8,7 +8,7 @@ export function Footer() {
       <div className="max-w-7xl mx-auto px-4">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-8">
           <div>
-            <h3 className="font-bold text-lg text-foreground mb-4">Vendor Shop</h3>
+            <h3 className="font-bold text-lg text-foreground mb-4">CartBridge</h3>
             <p className="text-muted-foreground text-sm">
               Your trusted online shop for quality products across multiple categories.
             </p>
@@ -45,7 +45,7 @@ export function Footer() {
         </div>
         <div className="border-t border-border pt-8">
           <p className="text-center text-muted-foreground text-sm">
-            © {new Date().getFullYear()} Vendor Shop. All rights reserved.
+            © {new Date().getFullYear()} CartBridge. All rights reserved.
           </p>
         </div>
       </div>

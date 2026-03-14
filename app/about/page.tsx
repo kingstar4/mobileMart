@@ -20,7 +20,7 @@ export default async function About() {
         <section className="bg-gradient-to-b from-muted to-background py-12 md:py-16">
           <div className="max-w-7xl mx-auto px-4 text-center">
             <h1 className="text-4xl md:text-5xl font-bold text-foreground mb-4 text-balance">
-              About Vendor Shop
+              About CartBridge
             </h1>
             <p className="text-muted-foreground text-lg md:text-xl max-w-2xl mx-auto">
               Bridging the gap between vendors and customers — so buying and selling is simpler for everyone.
@@ -34,7 +34,7 @@ export default async function About() {
           <div className="mb-12">
             <h2 className="text-3xl font-bold text-foreground mb-6">What We Do</h2>
             <p className="text-muted-foreground text-lg leading-relaxed mb-4">
-              Vendor Shop is a platform built to connect vendors with their customers in a smarter, more convenient way.
+              CartBridge is a platform built to connect vendors with their customers in a smarter, more convenient way.
               Instead of vendors repeatedly posting products in groups and customers constantly asking
               &quot;how much?&quot; or &quot;is it still available?&quot;, everything they need is right here — prices,
               availability, and product details — all in one place.
@@ -90,9 +90,9 @@ export default async function About() {
             </Card>
           </div>
 
-          {/* Why Vendor Shop */}
+          {/* Why CartBridge */}
           <div>
-            <h2 className="text-3xl font-bold text-foreground mb-6">Why Vendor Shop?</h2>
+            <h2 className="text-3xl font-bold text-foreground mb-6">Why CartBridge?</h2>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               <div className="space-y-2">
                 <h3 className="font-semibold text-foreground">No More Repetitive Posting</h3>
