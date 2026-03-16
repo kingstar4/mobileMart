@@ -5,11 +5,12 @@ import { useState, useEffect, useRef } from 'react';
 // Sample product cards for the orbital display
 const HERO_PRODUCTS = [
   { id: 1, name: 'Premium Watch', category: 'Accessories', price: '$299', emoji: '⌚' },
+  { id: 6, name: 'French Fries', category: 'Food', price: '$449', emoji: '🍟' },
   { id: 2, name: 'Wireless Earbuds', category: 'Electronics', price: '$149', emoji: '🎧' },
   { id: 3, name: 'Leather Bag', category: 'Fashion', price: '$189', emoji: '👜' },
   { id: 4, name: 'Running Shoes', category: 'Sports', price: '$129', emoji: '👟' },
-  { id: 5, name: 'Desk Lamp', category: 'Home', price: '$89', emoji: '💡' },
-  { id: 6, name: 'Camera Lens', category: 'Photography', price: '$449', emoji: '📷' },
+  { id: 5, name: 'T-Shirt', category: 'Clothing', price: '$89', emoji: '👕' },
+
 ];
 
 /* ── Scroll-driven floating card ── */
@@ -162,14 +163,12 @@ function StatBadge({ value, label, delay }: { value: string; label: string; dela
         transform: visible ? 'translateY(0)' : 'translateY(20px)',
         transition: 'all 0.7s cubic-bezier(0.16, 1, 0.3, 1)',
         textAlign: 'center',
-        padding: '0 28px',
       }}
-      className="border-r border-border/30 last:border-r-0"
+      className="border-r border-border/30 last:border-r-0 px-3 sm:px-5 md:px-7"
     >
       <div
-        className="text-primary"
+        className="text-primary text-xl sm:text-2xl md:text-4xl"
         style={{
-          fontSize: 36,
           fontWeight: 900,
           fontFamily: 'var(--font-heading)',
         }}
@@ -177,9 +176,8 @@ function StatBadge({ value, label, delay }: { value: string; label: string; dela
         {value}
       </div>
       <div
-        className="text-muted-foreground"
+        className="text-muted-foreground text-[8px] sm:text-[9px] md:text-[10px]"
         style={{
-          fontSize: 10,
           letterSpacing: '0.2em',
           textTransform: 'uppercase',
           fontFamily: 'var(--font-mono-display)',
@@ -219,7 +217,7 @@ function ScrollStory({ progress }: { progress: number }) {
         return (
           <div
             key={i}
-            className="absolute z-30 pointer-events-none"
+            className="absolute z-40 pointer-events-none"
             style={{
               top: '18%',
               opacity,
@@ -235,6 +233,7 @@ function ScrollStory({ progress }: { progress: number }) {
                 fontFamily: 'var(--font-heading)',
                 lineHeight: 1.1,
                 letterSpacing: '-0.02em',
+                textShadow: '0 2px 16px rgba(0,0,0,0.5), 0 0 40px rgba(0,0,0,0.3)',
               }}
             >
               {story.text}
@@ -246,6 +245,7 @@ function ScrollStory({ progress }: { progress: number }) {
                 fontFamily: 'var(--font-mono-display)',
                 marginTop: 10,
                 letterSpacing: '0.05em',
+                textShadow: '0 1px 12px rgba(0,0,0,0.5), 0 0 30px rgba(0,0,0,0.25)',
               }}
             >
               {story.sub}
@@ -430,9 +430,9 @@ export function HeroSection() {
 
         {/* Bottom stats */}
         <div
-          className="absolute bottom-16 left-1/2 -translate-x-1/2 flex items-center bg-card/60 backdrop-blur-xl border border-border/30 rounded-2xl z-10"
+          className="absolute bottom-6 sm:bottom-10 md:bottom-16 left-1/2 -translate-x-1/2 flex items-center bg-card/60 backdrop-blur-xl border border-border/30 rounded-xl sm:rounded-2xl z-10"
           style={{
-            padding: '20px 0',
+            padding: '12px 0',
             opacity: loaded ? 1 : 0,
             transition: 'opacity 0.8s ease 1s',
           }}

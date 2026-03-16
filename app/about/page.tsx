@@ -48,45 +48,41 @@ export default async function About() {
           {/* Contact Cards */}
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-12">
             {/* WhatsApp Contact */}
-            <Card className="p-6">
-              <div className="flex items-start gap-4">
-                <MessageCircle className="w-8 h-8 text-primary mt-1" />
-                <div className="flex-1">
-                  <h3 className="font-semibold text-foreground mb-2">Contact via WhatsApp</h3>
-                  <p className="text-muted-foreground text-sm mb-4">
-                    Have questions about the platform? Reach out to us directly on WhatsApp for quick responses.
-                  </p>
-                  <a
-                    href={`https://wa.me/${WHATSAPP_NUMBER}`}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="inline-flex items-center justify-center gap-2 w-full rounded-md bg-primary px-4 py-2.5 text-sm font-medium text-primary-foreground shadow-sm hover:bg-primary/90 transition-colors"
-                  >
-                    <MessageCircle className="w-4 h-4" />
-                    Chat on WhatsApp
-                  </a>
-                </div>
+            <Card className="p-8 flex flex-col items-center text-center">
+              <div className="w-14 h-14 rounded-full bg-primary/10 flex items-center justify-center mb-4">
+                <MessageCircle className="w-7 h-7 text-primary" />
               </div>
+              <h3 className="font-semibold text-lg text-foreground mb-2">Contact via WhatsApp</h3>
+              <p className="text-muted-foreground text-sm mb-6 leading-relaxed">
+                Have questions about the platform? Reach out to us directly on WhatsApp for quick responses.
+              </p>
+              <a
+                href={`https://wa.me/${WHATSAPP_NUMBER}`}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center justify-center gap-2 w-full rounded-lg bg-primary px-4 py-2.5 text-sm font-medium text-primary-foreground shadow-sm hover:bg-primary/90 transition-colors mt-auto"
+              >
+                <MessageCircle className="w-4 h-4" />
+                Chat on WhatsApp
+              </a>
             </Card>
 
             {/* Email Contact */}
-            <Card className="p-6">
-              <div className="flex items-start gap-4">
-                <Mail className="w-8 h-8 text-primary mt-1" />
-                <div className="flex-1">
-                  <h3 className="font-semibold text-foreground mb-2">Contact via Email</h3>
-                  <p className="text-muted-foreground text-sm mb-4">
-                    Prefer email? Send us a message and we&apos;ll get back to you as soon as possible.
-                  </p>
-                  <a
-                    href="mailto:davidinobemhe1@gmail.com"
-                    className="inline-flex items-center justify-center gap-2 w-full rounded-md bg-primary px-4 py-2.5 text-sm font-medium text-primary-foreground shadow-sm hover:bg-primary/90 transition-colors"
-                  >
-                    <Mail className="w-4 h-4" />
-                    Send an Email
-                  </a>
-                </div>
+            <Card className="p-8 flex flex-col items-center text-center">
+              <div className="w-14 h-14 rounded-full bg-primary/10 flex items-center justify-center mb-4">
+                <Mail className="w-7 h-7 text-primary" />
               </div>
+              <h3 className="font-semibold text-lg text-foreground mb-2">Contact via Email</h3>
+              <p className="text-muted-foreground text-sm mb-6 leading-relaxed">
+                Prefer email? Send us a message and we&apos;ll get back to you as soon as possible.
+              </p>
+              <a
+                href="mailto:davidinobemhe1@gmail.com"
+                className="inline-flex items-center justify-center gap-2 w-full rounded-lg bg-primary px-4 py-2.5 text-sm font-medium text-primary-foreground shadow-sm hover:bg-primary/90 transition-colors mt-auto"
+              >
+                <Mail className="w-4 h-4" />
+                Send an Email
+              </a>
             </Card>
           </div>
 
@@ -94,22 +90,34 @@ export default async function About() {
           <div>
             <h2 className="text-3xl font-bold text-foreground mb-6">Why CartBridge?</h2>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-              <div className="space-y-2">
-                <h3 className="font-semibold text-foreground">No More Repetitive Posting</h3>
-                <p className="text-muted-foreground">Vendors list their products once and customers can browse anytime — no need to repost in groups over and over.</p>
-              </div>
-              <div className="space-y-2">
-                <h3 className="font-semibold text-foreground">Prices Upfront</h3>
-                <p className="text-muted-foreground">Every product shows its price clearly, so customers never have to ask &quot;how much?&quot; again.</p>
-              </div>
-              <div className="space-y-2">
-                <h3 className="font-semibold text-foreground">Real-Time Availability</h3>
-                <p className="text-muted-foreground">Stock status is displayed on every product — no more messaging vendors just to ask &quot;is it still available?&quot;</p>
-              </div>
-              <div className="space-y-2">
-                <h3 className="font-semibold text-foreground">Secure Transactions</h3>
-                <p className="text-muted-foreground">All purchases are handled directly between vendor and customer via WhatsApp — private, personal, and secure.</p>
-              </div>
+              <Card className="p-6 flex flex-col items-center text-center">
+                <div className="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center mb-3">
+                  <span className="text-primary text-lg font-bold">1</span>
+                </div>
+                <h3 className="font-semibold text-foreground mb-2">No More Repetitive Posting</h3>
+                <p className="text-muted-foreground text-sm leading-relaxed">Vendors list their products once and customers can browse anytime — no need to repost in groups over and over.</p>
+              </Card>
+              <Card className="p-6 flex flex-col items-center text-center">
+                <div className="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center mb-3">
+                  <span className="text-primary text-lg font-bold">2</span>
+                </div>
+                <h3 className="font-semibold text-foreground mb-2">Prices Upfront</h3>
+                <p className="text-muted-foreground text-sm leading-relaxed">Every product shows its price clearly, so customers never have to ask &quot;how much?&quot; again.</p>
+              </Card>
+              <Card className="p-6 flex flex-col items-center text-center">
+                <div className="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center mb-3">
+                  <span className="text-primary text-lg font-bold">3</span>
+                </div>
+                <h3 className="font-semibold text-foreground mb-2">Real-Time Availability</h3>
+                <p className="text-muted-foreground text-sm leading-relaxed">Stock status is displayed on every product — no more messaging vendors just to ask &quot;is it still available?&quot;</p>
+              </Card>
+              <Card className="p-6 flex flex-col items-center text-center">
+                <div className="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center mb-3">
+                  <span className="text-primary text-lg font-bold">4</span>
+                </div>
+                <h3 className="font-semibold text-foreground mb-2">Secure Transactions</h3>
+                <p className="text-muted-foreground text-sm leading-relaxed">All purchases are handled directly between vendor and customer via WhatsApp — private, personal, and secure.</p>
+              </Card>
             </div>
           </div>
         </section>

@@ -15,7 +15,7 @@ export default async function Home() {
     .select("id, name")
     .order("name", { ascending: true });
 
-  /* Fetch latest 24 active products across ALL vendors */
+  /* Fetch latest 8 active products across ALL vendors */
   const { data: products } = await supabase
     .from("products")
     .select(
@@ -24,7 +24,7 @@ export default async function Home() {
     )
     .eq("is_active", true)
     .order("created_at", { ascending: false })
-    .limit(24);
+    .limit(8);
 
   /* Normalize images */
   const items = (products ?? []).map((p: any) => {

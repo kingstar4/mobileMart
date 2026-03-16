@@ -1,6 +1,7 @@
 'use client';
 
 import Link from 'next/link';
+import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 import { WhatsAppCTAButton } from './WhatsAppCTAButton';
 import { ThemeToggle } from './ThemeToggle';
@@ -59,8 +60,15 @@ export function Navbar({ vendors = [] }: NavbarProps) {
       <div className="max-w-7xl mx-auto px-4 h-16 flex items-center justify-between">
         <Link
           href="/"
-          className="font-semibold text-xl text-foreground hover:text-primary transition-colors duration-300 tracking-tight"
+          className="flex items-center gap-2 font-semibold text-xl text-foreground hover:text-primary transition-colors duration-300 tracking-tight"
         >
+          <Image
+            src="/cartbridge logo.png"
+            alt="CartBridge logo"
+            width={60}
+            height={60}
+            className="rounded-md"
+          />
           CartBridge
         </Link>
 
@@ -119,9 +127,9 @@ export function Navbar({ vendors = [] }: NavbarProps) {
         </nav>
 
         {/* Mobile nav */}
-        <div className="md:hidden flex items-center gap-3">
+        <div className="md:hidden flex items-center gap-2">
           <ThemeToggle />
-          <WhatsAppCTAButton size="sm" />
+          <WhatsAppCTAButton size="icon" />
           <button
             onClick={() => setIsMobileMenuOpen((prev) => !prev)}
             className="p-2 rounded-lg text-foreground/70 hover:text-primary hover:bg-primary/10 transition-colors"
