@@ -19,10 +19,10 @@ export default function OnboardingPage() {
 
     return (
         <main className="mx-auto max-w-lg p-6">
-            <h1 className="text-2xl font-semibold mb-4">Create your store</h1>
+            <h1 className="text-2xl font-semibold mb-4 text-foreground">Create your store</h1>
 
             <form
-                className="rounded-2xl border bg-white p-6 space-y-4"
+                className="rounded-2xl border border-border bg-card text-card-foreground p-6 space-y-4"
                 onSubmit={async (e) => {
                     e.preventDefault();
                     setErr(null);
@@ -71,10 +71,10 @@ export default function OnboardingPage() {
                     }
                 }}
             >
-                <input className="w-full rounded-xl border px-3 py-2" placeholder="Store name" value={name} onChange={(e) => setName(e.target.value)} />
-                <input className="w-full rounded-xl border px-3 py-2" placeholder="WhatsApp number (digits only)" value={whatsapp} onChange={(e) => setWhatsapp(e.target.value)} />
-                {err ? <p className="text-sm text-red-600">{err}</p> : null}
-                <button disabled={loading} className="w-full rounded-xl bg-black py-3 text-white font-semibold disabled:opacity-60">
+                <input className="w-full rounded-xl border border-input bg-background text-foreground placeholder:text-muted-foreground px-3 py-2 focus:outline-none focus:ring-2 focus:ring-ring" placeholder="Store name" value={name} onChange={(e) => setName(e.target.value)} />
+                <input className="w-full rounded-xl border border-input bg-background text-foreground placeholder:text-muted-foreground px-3 py-2 focus:outline-none focus:ring-2 focus:ring-ring" placeholder="WhatsApp number (digits only)" value={whatsapp} onChange={(e) => setWhatsapp(e.target.value)} />
+                {err ? <p className="text-sm text-red-600 dark:text-red-400">{err}</p> : null}
+                <button disabled={loading} className="w-full rounded-xl bg-primary text-primary-foreground py-3 font-semibold disabled:opacity-60 hover:bg-primary/90 transition-colors">
                     {loading ? "Creating..." : "Create store"}
                 </button>
             </form>
