@@ -3,17 +3,30 @@
 import { Share2 } from "lucide-react";
 import { useState } from "react";
 
+const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL ?? "https://cartbridge.netlify.app";
+
 export function ShareButtonClient({ title }: { title: string }) {
     const [copied, setCopied] = useState(false);
 
     const handleShare = async () => {
-        const url = typeof window !== "undefined" ? window.location.href : "";
+        // Build the public URL from the production domain + current path
+        const path = typeof window !== "undefined" ? window.location.pathname : "";
+        const url = `${SITE_URL}${path}`;
         const text = `Check out: ${title}`;
 
         if (navigator.share) {
-            navigator.share({ title, text, url });
+            try {
+                await navigator.share({ title, text, url });
+            } catch {
+                // User dismissed the share sheet — ignore
+            }
         } else {
-            await navigator.clipboard.writeText(`${text} ${url}`);
+            // Fallback: copy link to clipboard
+            try {
+                await navigator.clipboard.writeText(url);
+            } catch {
+                window.prompt("Copy this link:", url);
+            }
             setCopied(true);
             setTimeout(() => setCopied(false), 2000);
         }
@@ -29,3 +42,4 @@ export function ShareButtonClient({ title }: { title: string }) {
         </button>
     );
 }
+

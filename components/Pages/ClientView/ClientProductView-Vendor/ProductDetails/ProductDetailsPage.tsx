@@ -44,7 +44,8 @@ export default async function ProductDetailsPage({ vendorId, productId }: PagePr
 
     const formattedPrice = `${product.currency} ${Number(product.price).toLocaleString(undefined, { minimumFractionDigits: 2 })}`;
 
-    const whatsappMessage = `Hi, I want to buy: ${product.title} (${formattedPrice}). Here's the link: ${process.env.NEXT_PUBLIC_SITE_URL ?? ""}/v/${vendorId}/p/${productId}`;
+    const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? "https://cartbridge.netlify.app";
+    const whatsappMessage = `Hi, I want to buy: ${product.title} (${formattedPrice}). Here's the link: ${siteUrl}/v/${vendorId}/p/${productId}`;
 
     return (
         <div className="flex flex-col min-h-screen bg-background">

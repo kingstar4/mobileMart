@@ -4,6 +4,7 @@ import * as React from "react";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { supabaseBrowser } from "@/lib/supabase/browserClient";
 import { ThemeToggle } from "@/components/theme-toggle";
+import { Link2, Check } from "lucide-react";
 
 type Vendor = {
     id: string;
@@ -31,6 +32,8 @@ function formatMoney(currency: string, price: number) {
     }
 }
 
+const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL ?? "https://cartbridge.netlify.app";
+
 export default function ProductsClient({
     vendor,
     role,
@@ -56,6 +59,20 @@ export default function ProductsClient({
 
     const [deleteId, setDeleteId] = React.useState<string | null>(null);
     const [error, setError] = React.useState<string | null>(null);
+
+    const [linkCopied, setLinkCopied] = React.useState(false);
+
+    async function copyStoreLink() {
+        const url = `${SITE_URL}/v/${vendor.id}`;
+        try {
+            await navigator.clipboard.writeText(url);
+            setLinkCopied(true);
+            setTimeout(() => setLinkCopied(false), 2000);
+        } catch {
+            // fallback
+            window.prompt("Copy this link:", url);
+        }
+    }
 
     // Update URL query params (so server page re-fetches correctly)
     function applyQuery(next: { q?: string; status?: string; sort?: string }) {
@@ -170,8 +187,22 @@ export default function ProductsClient({
                     </p>
                 </div>
 
-                <div className="flex items-center gap-2">
+                <div className="flex flex-wrap items-center gap-2">
                     <ThemeToggle />
+                    <button
+                        onClick={copyStoreLink}
+                        className={`inline-flex items-center gap-1.5 rounded-xl border px-4 py-2 text-sm transition-colors ${
+                            linkCopied
+                                ? "border-green-500 bg-green-50 text-green-700 dark:bg-green-950/30 dark:text-green-400 dark:border-green-700"
+                                : "border-border text-foreground hover:bg-muted"
+                        }`}
+                    >
+                        {linkCopied ? (
+                            <><Check className="h-3.5 w-3.5" /> Copied!</>
+                        ) : (
+                            <><Link2 className="h-3.5 w-3.5" /> Copy Store Link</>
+                        )}
+                    </button>
                     <a
                         href={`/v/${vendor.id}`}
                         className="rounded-xl border px-4 py-2 text-sm"
