@@ -3,6 +3,7 @@
 import { Button } from '@/components/ui/button';
 import { MessageCircle } from 'lucide-react';
 import { WHATSAPP_NUMBER } from '@/lib/products';
+import { formatWhatsAppNumber } from '@/lib/formatWhatsAppNumber';
 
 interface WhatsAppCTAButtonProps {
   productTitle?: string;
@@ -21,7 +22,7 @@ export function WhatsAppCTAButton({
   className,
   size = 'default',
 }: WhatsAppCTAButtonProps) {
-  const phone = whatsappNumber || WHATSAPP_NUMBER;
+  const phone = formatWhatsAppNumber(whatsappNumber || WHATSAPP_NUMBER);
 
   const handleWhatsAppClick = () => {
     let message = 'Hi, I\'m interested in your products!';

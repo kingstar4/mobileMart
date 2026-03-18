@@ -4,6 +4,7 @@ import Link from "next/link";
 import { MessageCircle, ArrowLeft, Share2 } from "lucide-react";
 import { ImageGallery } from "@/components/ImageGallery";
 import { ThemeToggle } from "@/components/theme-toggle";
+import { formatWhatsAppNumber } from "@/lib/formatWhatsAppNumber";
 
 type PageProps = {
     vendorId: string;
@@ -59,7 +60,7 @@ export default async function ProductDetailsPage({ vendorId, productId }: PagePr
                     <div className="flex items-center gap-2">
                         <ThemeToggle />
                         <a
-                            href={`https://wa.me/${vendor.whatsapp_number}?text=${encodeURIComponent("Hi, I'm interested in your products!")}`}
+                            href={`https://wa.me/${formatWhatsAppNumber(vendor.whatsapp_number)}?text=${encodeURIComponent("Hi, I'm interested in your products!")}`}
                             target="_blank"
                             rel="noopener noreferrer"
                             className="inline-flex items-center gap-2 rounded-lg bg-green-600 px-4 py-2 text-sm font-semibold text-white transition-colors hover:bg-green-700"
@@ -129,7 +130,7 @@ export default async function ProductDetailsPage({ vendorId, productId }: PagePr
                         {/* CTA */}
                         <div className="space-y-3 pt-4">
                             <a
-                                href={`https://wa.me/${vendor.whatsapp_number}?text=${encodeURIComponent(whatsappMessage)}`}
+                                href={`https://wa.me/${formatWhatsAppNumber(vendor.whatsapp_number)}?text=${encodeURIComponent(whatsappMessage)}`}
                                 target="_blank"
                                 rel="noopener noreferrer"
                                 className="flex w-full items-center justify-center gap-2 rounded-xl bg-green-600 py-3.5 text-base font-semibold text-white transition-colors hover:bg-green-700"

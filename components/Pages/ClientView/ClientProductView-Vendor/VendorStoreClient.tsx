@@ -5,6 +5,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { MessageCircle, Search, ArrowUpDown } from "lucide-react";
 import { ThemeToggle } from "@/components/theme-toggle";
+import { formatWhatsAppNumber } from "@/lib/formatWhatsAppNumber";
 
 type Product = {
     id: string;
@@ -67,7 +68,7 @@ export default function VendorStoreClient({ vendor, products }: Props) {
                     <div className="flex items-center gap-2">
                         <ThemeToggle />
                         <a
-                            href={`https://wa.me/${vendor.whatsapp_number}?text=${encodeURIComponent("Hi, I'm interested in your products!")}`}
+                            href={`https://wa.me/${formatWhatsAppNumber(vendor.whatsapp_number)}?text=${encodeURIComponent("Hi, I'm interested in your products!")}`}
                             target="_blank"
                             rel="noopener noreferrer"
                             className="inline-flex items-center gap-2 rounded-lg bg-green-600 px-4 py-2 text-sm font-semibold text-white transition-colors hover:bg-green-700"
@@ -190,7 +191,7 @@ export default function VendorStoreClient({ vendor, products }: Props) {
                         © {new Date().getFullYear()} {vendor.name}. Powered by CartBridge.
                     </p>
                     <a
-                        href={`https://wa.me/${vendor.whatsapp_number}`}
+                        href={`https://wa.me/${formatWhatsAppNumber(vendor.whatsapp_number)}`}
                         target="_blank"
                         rel="noopener noreferrer"
                         className="inline-flex items-center gap-1 text-sm text-muted-foreground hover:text-foreground transition-colors"

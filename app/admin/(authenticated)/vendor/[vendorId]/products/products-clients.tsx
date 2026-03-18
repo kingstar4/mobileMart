@@ -179,6 +179,12 @@ export default function ProductsClient({
                         View Storefront
                     </a>
                     <a
+                        href={`/admin/vendor/${vendor.id}/settings`}
+                        className="rounded-xl border px-4 py-2 text-sm"
+                    >
+                        ⚙ Settings
+                    </a>
+                    <a
                         href={`/admin/vendor/${vendor.id}/products/new`}
                         className="rounded-xl bg-foreground px-4 py-2 text-sm font-semibold text-background"
                     >
