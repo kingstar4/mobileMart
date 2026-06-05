@@ -1,7 +1,7 @@
 import { notFound } from "next/navigation";
 import { createSupabaseServer } from "@/lib/supabase/server";
 import Link from "next/link";
-import { MessageCircle, ArrowLeft, Share2 } from "lucide-react";
+import { MessageCircle, ArrowLeft, Share2, MapPin } from "lucide-react";
 import { ImageGallery } from "@/components/ImageGallery";
 import { ThemeToggle } from "@/components/theme-toggle";
 import { formatWhatsAppNumber } from "@/lib/formatWhatsAppNumber";
@@ -17,7 +17,7 @@ export default async function ProductDetailsPage({ vendorId, productId }: PagePr
     // Fetch vendor
     const { data: vendor } = await supabase
         .from("vendors")
-        .select("id, name, whatsapp_number")
+        .select("id, name, whatsapp_number, location")
         .eq("id", vendorId)
         .single();
 
@@ -153,6 +153,12 @@ export default async function ProductDetailsPage({ vendorId, productId }: PagePr
                                     {vendor.name}
                                 </Link>
                             </p>
+                            {vendor.location ? (
+                                <p className="mt-2 inline-flex items-center gap-1.5 text-sm text-muted-foreground">
+                                    <MapPin className="h-4 w-4" />
+                                    {vendor.location}
+                                </p>
+                            ) : null}
                         </div>
                     </div>
                 </div>

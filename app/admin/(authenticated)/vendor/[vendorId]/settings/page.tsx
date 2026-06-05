@@ -37,7 +37,7 @@ export default async function VendorSettingsPage({ params }: PageProps) {
     // Fetch vendor
     const { data: vendor, error: vErr } = await supabase
         .from("vendors")
-        .select("id,name,whatsapp_number")
+        .select("id,name,whatsapp_number,location")
         .eq("id", vendorId)
         .single();
 

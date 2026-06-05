@@ -3,7 +3,7 @@
 import { useMemo, useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
-import { MessageCircle, Search, ArrowUpDown } from "lucide-react";
+import { MessageCircle, Search, ArrowUpDown, MapPin } from "lucide-react";
 import { ThemeToggle } from "@/components/theme-toggle";
 import { formatWhatsAppNumber } from "@/lib/formatWhatsAppNumber";
 
@@ -21,6 +21,7 @@ type Vendor = {
     id: string;
     name: string;
     whatsapp_number: string;
+    location: string | null;
 };
 
 type Props = {
@@ -86,6 +87,12 @@ export default function VendorStoreClient({ vendor, products }: Props) {
                     <h1 className="text-3xl md:text-4xl font-bold text-foreground">
                         {vendor.name}
                     </h1>
+                    {vendor.location ? (
+                        <p className="inline-flex items-center justify-center gap-1.5 text-sm font-medium text-muted-foreground">
+                            <MapPin className="h-4 w-4" />
+                            {vendor.location}
+                        </p>
+                    ) : null}
                     <p className="text-muted-foreground max-w-xl mx-auto">
                         Browse our collection and order directly via WhatsApp — fast, easy, no middleman.
                     </p>

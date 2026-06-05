@@ -11,6 +11,7 @@ type Vendor = {
     id: string;
     name: string;
     whatsapp_number: string;
+    location: string | null;
 };
 
 /**
@@ -166,6 +167,7 @@ export default function VendorSettingsClient({
     const initial = splitPhone(vendor.whatsapp_number);
 
     const [name, setName] = useState(vendor.name);
+    const [location, setLocation] = useState(vendor.location ?? "");
     const [countryCode, setCountryCode] = useState(initial.dialCode);
     const [localNumber, setLocalNumber] = useState(initial.localNumber);
 
@@ -181,10 +183,15 @@ export default function VendorSettingsClient({
         setSuccess(false);
 
         const trimmedName = name.trim();
+        const trimmedLocation = location.trim();
         const cleanLocal = localNumber.replace(/^0+/, "").replace(/\D/g, "");
 
         if (trimmedName.length < 2) {
             setError("Store name must be at least 2 characters.");
+            return;
+        }
+        if (trimmedLocation.length < 2) {
+            setError("Store location must be at least 2 characters.");
             return;
         }
         if (!/^\d{6,15}$/.test(cleanLocal)) {
@@ -199,6 +206,7 @@ export default function VendorSettingsClient({
             .from("vendors")
             .update({
                 name: trimmedName,
+                location: trimmedLocation,
                 whatsapp_number: fullNumber,
             })
             .eq("id", vendor.id);
@@ -251,6 +259,23 @@ export default function VendorSettingsClient({
                         disabled={!canEdit}
                         placeholder="Your store name"
                     />
+                </div>
+
+                {/* Store location */}
+                <div>
+                    <label className="block text-sm font-medium text-foreground mb-1.5">
+                        Store Location
+                    </label>
+                    <input
+                        className="w-full rounded-xl border border-input bg-background text-foreground placeholder:text-muted-foreground px-3 py-2.5 focus:outline-none focus:ring-2 focus:ring-ring disabled:opacity-50"
+                        value={location}
+                        onChange={(e) => setLocation(e.target.value)}
+                        disabled={!canEdit}
+                        placeholder="e.g. Ikeja, Lagos"
+                    />
+                    <p className="mt-1 text-xs text-muted-foreground">
+                        This is shown to customers on your store.
+                    </p>
                 </div>
 
                 {/* WhatsApp number */}
