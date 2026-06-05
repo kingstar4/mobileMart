@@ -1,16 +1,62 @@
-'use client';
+"use client";
 
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect, useRef } from "react";
+import {
+  ArrowRight,
+  Briefcase,
+  Dumbbell,
+  Headphones,
+  Shirt,
+  Utensils,
+  Watch,
+  type LucideIcon,
+} from "lucide-react";
+
+type HeroProduct = {
+  id: number;
+  category: string;
+  price: string;
+  icon: LucideIcon;
+};
 
 // Sample product cards for the orbital display
-const HERO_PRODUCTS = [
-  { id: 1, name: 'Premium Watch', category: 'Accessories', price: '$299', emoji: '⌚' },
-  { id: 6, name: 'French Fries', category: 'Food', price: '$449', emoji: '🍟' },
-  { id: 2, name: 'Wireless Earbuds', category: 'Electronics', price: '$149', emoji: '🎧' },
-  { id: 3, name: 'Leather Bag', category: 'Fashion', price: '$189', emoji: '👜' },
-  { id: 4, name: 'Running Shoes', category: 'Sports', price: '$129', emoji: '👟' },
-  { id: 5, name: 'T-Shirt', category: 'Clothing', price: '$89', emoji: '👕' },
-
+const HERO_PRODUCTS: HeroProduct[] = [
+  {
+    id: 1,
+    category: "Accessories",
+    price: "NGN 299,000",
+    icon: Watch,
+  },
+  {
+    id: 6,
+    category: "Food",
+    price: "NGN 4,500",
+    icon: Utensils,
+  },
+  {
+    id: 2,
+    category: "Electronics",
+    price: "NGN 149,000",
+    icon: Headphones,
+  },
+  {
+    id: 3,
+    category: "Fashion",
+    price: "NGN 189,000",
+    icon: Briefcase,
+  },
+  {
+    id: 4,
+    category: "Sports",
+    price: "NGN 129,000",
+    icon: Dumbbell,
+  },
+  {
+    id: 5,
+    category: "Clothing",
+    price: "NGN 35,000",
+    icon: Shirt,
+  },
 ];
 
 /* ── Scroll-driven floating card ── */
@@ -40,19 +86,20 @@ function FloatingCard({
   // Cards expand in the middle of the scroll journey
   const isExpanded = scrollProgress > 0.3 && scrollProgress < 0.7;
   const cardScale = isExpanded ? scale * 1.1 : scale;
+  const Icon = product.icon;
 
   return (
     <div
       suppressHydrationWarning
       style={{
-        position: 'absolute',
-        left: '50%',
-        top: '50%',
+        position: "absolute",
+        left: "50%",
+        top: "50%",
         transform: `translate(calc(-50% + ${x}px), calc(-50%)) scale(${cardScale})`,
         opacity,
         zIndex,
-        transition: 'transform 0.05s linear',
-        willChange: 'transform',
+        transition: "transform 0.05s linear",
+        willChange: "transform",
       }}
     >
       <div
@@ -60,7 +107,7 @@ function FloatingCard({
         style={{
           width: 180,
           borderRadius: 20,
-          padding: '20px 16px',
+          padding: "20px 16px",
         }}
       >
         {/* Glow dot */}
@@ -69,25 +116,38 @@ function FloatingCard({
           style={{
             width: 8,
             height: 8,
-            borderRadius: '50%',
-            boxShadow: '0 0 12px var(--color-primary)',
+            borderRadius: "50%",
+            boxShadow: "0 0 12px var(--color-primary)",
             marginBottom: 12,
           }}
         />
 
-        {/* Emoji */}
-        <div style={{ fontSize: 36, marginBottom: 10, lineHeight: 1 }}>{product.emoji}</div>
+        {/* Product category mark */}
+        <div
+          className="border border-border/60 bg-muted/60 text-foreground"
+          style={{
+            width: 48,
+            height: 48,
+            borderRadius: 14,
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+            marginBottom: 12,
+          }}
+        >
+          <Icon size={25} strokeWidth={1.8} />
+        </div>
 
         {/* Category tag */}
         <div
           className="text-primary bg-primary/10"
           style={{
-            display: 'inline-block',
+            display: "inline-block",
             fontSize: 9,
-            fontFamily: 'var(--font-mono-display)',
-            letterSpacing: '0.15em',
-            textTransform: 'uppercase',
-            padding: '3px 8px',
+            fontFamily: "var(--font-mono-display)",
+            letterSpacing: "0.15em",
+            textTransform: "uppercase",
+            padding: "3px 8px",
             borderRadius: 4,
             marginBottom: 8,
           }}
@@ -95,26 +155,13 @@ function FloatingCard({
           {product.category}
         </div>
 
-        {/* Product name */}
-        <div
-          className="text-foreground"
-          style={{
-            fontSize: 14,
-            fontWeight: 700,
-            fontFamily: 'var(--font-heading)',
-            marginBottom: 4,
-          }}
-        >
-          {product.name}
-        </div>
-
         {/* Price row */}
         <div
           style={{
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'space-between',
-            borderTop: '1px solid var(--color-border)',
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "space-between",
+            borderTop: "1px solid var(--color-border)",
             paddingTop: 10,
           }}
         >
@@ -123,7 +170,7 @@ function FloatingCard({
             style={{
               fontSize: 16,
               fontWeight: 800,
-              fontFamily: 'var(--font-heading)',
+              fontFamily: "var(--font-heading)",
             }}
           >
             {product.price}
@@ -133,14 +180,13 @@ function FloatingCard({
             style={{
               width: 28,
               height: 28,
-              borderRadius: '50%',
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
-              fontSize: 12,
+              borderRadius: "50%",
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
             }}
           >
-            →
+            <ArrowRight size={14} strokeWidth={2} />
           </div>
         </div>
       </div>
@@ -149,7 +195,15 @@ function FloatingCard({
 }
 
 /* ── Stat badge ── */
-function StatBadge({ value, label, delay }: { value: string; label: string; delay: number }) {
+function StatBadge({
+  value,
+  label,
+  delay,
+}: {
+  value: string;
+  label: string;
+  delay: number;
+}) {
   const [visible, setVisible] = useState(false);
   useEffect(() => {
     const t = setTimeout(() => setVisible(true), delay);
@@ -160,9 +214,9 @@ function StatBadge({ value, label, delay }: { value: string; label: string; dela
     <div
       style={{
         opacity: visible ? 1 : 0,
-        transform: visible ? 'translateY(0)' : 'translateY(20px)',
-        transition: 'all 0.7s cubic-bezier(0.16, 1, 0.3, 1)',
-        textAlign: 'center',
+        transform: visible ? "translateY(0)" : "translateY(20px)",
+        transition: "all 0.7s cubic-bezier(0.16, 1, 0.3, 1)",
+        textAlign: "center",
       }}
       className="border-r border-border/30 last:border-r-0 px-3 sm:px-5 md:px-7"
     >
@@ -170,7 +224,7 @@ function StatBadge({ value, label, delay }: { value: string; label: string; dela
         className="text-primary text-xl sm:text-2xl md:text-4xl"
         style={{
           fontWeight: 900,
-          fontFamily: 'var(--font-heading)',
+          fontFamily: "var(--font-heading)",
         }}
       >
         {value}
@@ -178,9 +232,9 @@ function StatBadge({ value, label, delay }: { value: string; label: string; dela
       <div
         className="text-muted-foreground text-[8px] sm:text-[9px] md:text-[10px]"
         style={{
-          letterSpacing: '0.2em',
-          textTransform: 'uppercase',
-          fontFamily: 'var(--font-mono-display)',
+          letterSpacing: "0.2em",
+          textTransform: "uppercase",
+          fontFamily: "var(--font-mono-display)",
           marginTop: 4,
         }}
       >
@@ -193,10 +247,30 @@ function StatBadge({ value, label, delay }: { value: string; label: string; dela
 /* ── Scroll-driven story text ── */
 function ScrollStory({ progress }: { progress: number }) {
   const stories = [
-    { at: 0, text: 'Browse Products.', sub: 'Prices, availability — all in one place.', align: 'center' as const },
-    { at: 0.25, text: 'No More Asking.', sub: '"How much?" is a thing of the past.', align: 'left' as const },
-    { at: 0.55, text: 'Every Category.', sub: 'Fashion, tech, accessories & more.', align: 'right' as const },
-    { at: 0.85, text: 'Connect & Buy.', sub: 'Chat directly with vendors on WhatsApp.', align: 'center' as const },
+    {
+      at: 0,
+      text: "Browse Products.",
+      sub: "Prices, availability — all in one place.",
+      align: "center" as const,
+    },
+    {
+      at: 0.25,
+      text: "No More Asking.",
+      sub: '"How much?" is a thing of the past.',
+      align: "left" as const,
+    },
+    {
+      at: 0.55,
+      text: "Every Category.",
+      sub: "Fashion, tech, accessories & more.",
+      align: "right" as const,
+    },
+    {
+      at: 0.85,
+      text: "Connect & Buy.",
+      sub: "Chat directly with vendors on WhatsApp.",
+      align: "center" as const,
+    },
   ];
 
   return (
@@ -208,32 +282,41 @@ function ScrollStory({ progress }: { progress: number }) {
         const y = visible ? 0 : progress < story.at ? 30 : -30;
 
         const alignStyle: React.CSSProperties =
-          story.align === 'center'
-            ? { left: '50%', transform: `translateX(-50%) translateY(${y}px)`, textAlign: 'center' }
-            : story.align === 'left'
-              ? { left: 60, transform: `translateY(${y}px)`, textAlign: 'left' }
-              : { right: 60, transform: `translateY(${y}px)`, textAlign: 'right' };
+          story.align === "center"
+            ? {
+                left: "50%",
+                transform: `translateX(-50%) translateY(${y}px)`,
+                textAlign: "center",
+              }
+            : story.align === "left"
+              ? { left: 60, transform: `translateY(${y}px)`, textAlign: "left" }
+              : {
+                  right: 60,
+                  transform: `translateY(${y}px)`,
+                  textAlign: "right",
+                };
 
         return (
           <div
             key={i}
             className="absolute z-40 pointer-events-none"
             style={{
-              top: '18%',
+              top: "18%",
               opacity,
-              transition: 'opacity 0.4s ease, transform 0.4s ease',
+              transition: "opacity 0.4s ease, transform 0.4s ease",
               ...alignStyle,
             }}
           >
             <div
               className="text-foreground"
               style={{
-                fontSize: 'clamp(32px, 5vw, 64px)',
+                fontSize: "clamp(32px, 5vw, 64px)",
                 fontWeight: 900,
-                fontFamily: 'var(--font-heading)',
+                fontFamily: "var(--font-heading)",
                 lineHeight: 1.1,
-                letterSpacing: '-0.02em',
-                textShadow: '0 2px 16px rgba(0,0,0,0.5), 0 0 40px rgba(0,0,0,0.3)',
+                letterSpacing: "-0.02em",
+                textShadow:
+                  "0 2px 16px rgba(0,0,0,0.5), 0 0 40px rgba(0,0,0,0.3)",
               }}
             >
               {story.text}
@@ -241,11 +324,18 @@ function ScrollStory({ progress }: { progress: number }) {
             <div
               className="text-muted-foreground"
               style={{
-                fontSize: 'clamp(13px, 1.5vw, 16px)',
-                fontFamily: 'var(--font-mono-display)',
+                display: "inline-block",
+                fontSize: "clamp(13px, 1.5vw, 16px)",
+                fontFamily: "var(--font-mono-display)",
                 marginTop: 10,
-                letterSpacing: '0.05em',
-                textShadow: '0 1px 12px rgba(0,0,0,0.5), 0 0 30px rgba(0,0,0,0.25)',
+                padding: "6px 10px",
+                borderRadius: 8,
+                background: "color-mix(in oklch, var(--color-background) 72%, transparent)",
+                backdropFilter: "blur(12px)",
+                border: "1px solid color-mix(in oklch, var(--color-border) 70%, transparent)",
+                letterSpacing: "0.05em",
+                textShadow:
+                  "0 1px 12px rgba(0,0,0,0.5), 0 0 30px rgba(0,0,0,0.25)",
               }}
             >
               {story.sub}
@@ -264,7 +354,14 @@ export function HeroSection() {
   const [mousePos, setMousePos] = useState({ x: 0, y: 0 });
   const [loaded, setLoaded] = useState(false);
   const [particles, setParticles] = useState<
-    Array<{ id: number; x: number; size: number; speed: number; opacity: number; delay: number }>
+    Array<{
+      id: number;
+      x: number;
+      size: number;
+      speed: number;
+      opacity: number;
+      delay: number;
+    }>
   >([]);
 
   useEffect(() => {
@@ -278,7 +375,7 @@ export function HeroSection() {
         speed: Math.random() * 20 + 10,
         opacity: Math.random() * 0.4 + 0.1,
         delay: Math.random() * 20,
-      }))
+      })),
     );
     return () => clearTimeout(timer);
   }, []);
@@ -288,14 +385,15 @@ export function HeroSection() {
     const handleScroll = () => {
       if (!containerRef.current) return;
       const rect = containerRef.current.getBoundingClientRect();
-      const totalHeight = containerRef.current.offsetHeight - window.innerHeight;
+      const totalHeight =
+        containerRef.current.offsetHeight - window.innerHeight;
       const scrolled = -rect.top;
       const progress = Math.max(0, Math.min(1, scrolled / totalHeight));
       setScrollProgress(progress);
     };
-    window.addEventListener('scroll', handleScroll, { passive: true });
+    window.addEventListener("scroll", handleScroll, { passive: true });
     handleScroll(); // initial call
-    return () => window.removeEventListener('scroll', handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
   // Mouse parallax
@@ -306,20 +404,20 @@ export function HeroSection() {
         y: (e.clientY / window.innerHeight - 0.5) * 20,
       });
     };
-    window.addEventListener('mousemove', handleMouse);
-    return () => window.removeEventListener('mousemove', handleMouse);
+    window.addEventListener("mousemove", handleMouse);
+    return () => window.removeEventListener("mousemove", handleMouse);
   }, []);
 
   return (
-    <div ref={containerRef} style={{ height: '500vh', position: 'relative' }}>
+    <div ref={containerRef} style={{ height: "500vh", position: "relative" }}>
       {/* Sticky viewport — stays fixed while user scrolls through 500vh */}
       <div
         className="bg-background overflow-hidden"
         style={{
-          position: 'sticky',
+          position: "sticky",
           top: 0,
-          height: '100vh',
-          width: '100%',
+          height: "100vh",
+          width: "100%",
         }}
       >
         {/* Animated grid */}
@@ -330,9 +428,9 @@ export function HeroSection() {
               linear-gradient(var(--color-primary, oklch(0.6 0.15 50)) 1px, transparent 1px),
               linear-gradient(90deg, var(--color-primary, oklch(0.6 0.15 50)) 1px, transparent 1px)
             `,
-            backgroundSize: '60px 60px',
+            backgroundSize: "60px 60px",
             opacity: 0.04,
-            animation: 'heroGridShimmer 4s ease-in-out infinite',
+            animation: "heroGridShimmer 4s ease-in-out infinite",
           }}
         />
 
@@ -340,15 +438,16 @@ export function HeroSection() {
         <div
           className="absolute pointer-events-none"
           style={{
-            top: '50%',
-            left: '50%',
+            top: "50%",
+            left: "50%",
             transform: `translate(-50%, -50%) translate(${mousePos.x * 0.5}px, ${mousePos.y * 0.5}px)`,
             width: 600,
             height: 600,
-            background: 'radial-gradient(circle, var(--color-primary) 0%, transparent 70%)',
+            background:
+              "radial-gradient(circle, var(--color-primary) 0%, transparent 70%)",
             opacity: 0.08,
-            borderRadius: '50%',
-            transition: 'transform 0.3s ease',
+            borderRadius: "50%",
+            transition: "transform 0.3s ease",
           }}
         />
 
@@ -362,7 +461,7 @@ export function HeroSection() {
               bottom: `-${p.size * 2}px`,
               width: p.size,
               height: p.size,
-              borderRadius: '50%',
+              borderRadius: "50%",
               opacity: p.opacity,
               animation: `heroFloatUp ${p.speed}s linear infinite`,
               animationDelay: `${p.delay}s`,
@@ -377,12 +476,12 @@ export function HeroSection() {
         <div
           className="absolute hidden md:block"
           style={{
-            top: '50%',
-            left: '50%',
+            top: "50%",
+            left: "50%",
             transform: `translate(-50%, -50%) perspective(1000px) rotateX(${mousePos.y * 0.5}deg) rotateY(${mousePos.x * 0.5}deg)`,
             width: 0,
             height: 0,
-            transition: 'transform 0.3s ease',
+            transition: "transform 0.3s ease",
           }}
         >
           {HERO_PRODUCTS.map((product, i) => (
@@ -399,15 +498,16 @@ export function HeroSection() {
           <div
             className="absolute bg-primary/20 border border-primary/30"
             style={{
-              left: '50%',
-              top: '50%',
-              transform: 'translate(-50%, -50%)',
+              left: "50%",
+              top: "50%",
+              transform: "translate(-50%, -50%)",
               width: 80,
               height: 80,
-              borderRadius: '50%',
-              boxShadow: '0 0 40px var(--color-primary), inset 0 0 40px var(--color-primary)',
+              borderRadius: "50%",
+              boxShadow:
+                "0 0 40px var(--color-primary), inset 0 0 40px var(--color-primary)",
               opacity: 0.25,
-              animation: 'heroPulse 3s ease-in-out infinite',
+              animation: "heroPulse 3s ease-in-out infinite",
             }}
           />
 
@@ -417,11 +517,11 @@ export function HeroSection() {
               key={i}
               className="absolute border border-primary/10"
               style={{
-                left: '50%',
-                top: '50%',
+                left: "50%",
+                top: "50%",
                 width: size,
                 height: size / 3,
-                borderRadius: '50%',
+                borderRadius: "50%",
                 animation: `heroSpin ${20 + i * 5}s linear infinite`,
               }}
             />
@@ -432,9 +532,9 @@ export function HeroSection() {
         <div
           className="absolute bottom-6 sm:bottom-10 md:bottom-16 left-1/2 -translate-x-1/2 flex items-center bg-card/60 backdrop-blur-xl border border-border/30 rounded-xl sm:rounded-2xl z-10"
           style={{
-            padding: '12px 0',
+            padding: "12px 0",
             opacity: loaded ? 1 : 0,
-            transition: 'opacity 0.8s ease 1s',
+            transition: "opacity 0.8s ease 1s",
           }}
         >
           <StatBadge value="500+" label="Active Vendors" delay={600} />
@@ -447,16 +547,16 @@ export function HeroSection() {
           className="absolute bottom-5 left-1/2 -translate-x-1/2 flex flex-col items-center gap-1.5"
           style={{
             opacity: scrollProgress < 0.05 ? 1 : 0,
-            transition: 'opacity 0.4s ease',
+            transition: "opacity 0.4s ease",
           }}
         >
           <div
             className="text-muted-foreground"
             style={{
-              fontFamily: 'var(--font-mono-display)',
+              fontFamily: "var(--font-mono-display)",
               fontSize: 9,
-              letterSpacing: '0.2em',
-              textTransform: 'uppercase',
+              letterSpacing: "0.2em",
+              textTransform: "uppercase",
             }}
           >
             Scroll to explore
@@ -467,7 +567,7 @@ export function HeroSection() {
               width: 1,
               height: 40,
               opacity: 0.6,
-              animation: 'heroPulse 2s ease-in-out infinite',
+              animation: "heroPulse 2s ease-in-out infinite",
             }}
           />
         </div>
@@ -478,8 +578,8 @@ export function HeroSection() {
           style={{
             height: 2,
             width: `${scrollProgress * 100}%`,
-            boxShadow: '0 0 10px var(--color-primary)',
-            transition: 'width 0.1s linear',
+            boxShadow: "0 0 10px var(--color-primary)",
+            transition: "width 0.1s linear",
           }}
         />
       </div>
